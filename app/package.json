@@ -1,8 +1,8 @@
 {
   "name": "js-simple-task-manager",
   "version": "1.0.0",
-  "description": "Simple application to learn REST APIs",
-  "main": "app/server.js",
+  "description": "Simple JavaScript application, exercise of REST API",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "supervisor server.js"
