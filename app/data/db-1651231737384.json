@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "title": "Learn HTML5",
+      "progress": 77,
+      "note": "I will learn the rest by practice.",
+      "completed": false,
+      "id": 5
+    },
+    {
+      "id": 2,
+      "title": "Learn CSS3",
+      "progress": 70,
+      "note": "I will learn the rest by practice.",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "title": "Learn JavaScript",
+      "progress": 58,
+      "note": "I like it...",
+      "completed": false
+    },
+    {
+      "title": "Learn JavaScript Promises",
+      "progress": 100,
+      "note": "I think understand them good enough.",
+      "completed": true,
+      "id": 4
+    }
+  ]
+}

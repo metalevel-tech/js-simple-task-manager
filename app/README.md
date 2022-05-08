@@ -8,8 +8,6 @@
 
 * [`npm install packagename --save-dev` not updating `package.json`](https://stackoverflow.com/a/62706498/6543935)
 
-* [integrate json-server with express server](https://github.com/typicode/json-server/issues/253)
-
 ## `json-server` basic requests
 
 

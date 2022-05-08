@@ -1,0 +1,33 @@
+{
+  "name": "js-simple-task-manager",
+  "version": "1.0.0",
+  "description": "Simple application to learn REST APIs",
+  "main": "app/server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "supervisor server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metalevel-tech/js-simple-task-manager.git"
+  },
+  "keywords": [
+    "javascript",
+    "express",
+    "react",
+    "rest-api"
+  ],
+  "author": "Spas Z. Spasov",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/metalevel-tech/js-simple-task-manager/issues"
+  },
+  "homepage": "https://github.com/metalevel-tech/js-simple-task-manager#readme",
+  "devDependencies": {
+    "json-server": "^0.17.0",
+    "supervisor": "^0.12.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

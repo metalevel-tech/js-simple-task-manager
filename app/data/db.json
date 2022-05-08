@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "title": "Learn HTML",
+      "progress": 81,
+      "note": "Hypertext markup language",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "Learn CSS",
+      "progress": 64,
+      "note": "Cascading style sheet",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "Learn JavaScript",
+      "progress": 55,
+      "note": "A programming language for web applications",
+      "completed": false,
+      "id": 3
+    }
+  ],
+  "settings": [
+    {
+      "name": "Dark Mode",
+      "value": true,
+      "id": 1
+    },
+    {
+      "name": "Show Completed Tasks",
+      "value": true,
+      "id": 2
+    }
+  ]
+}
