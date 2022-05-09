@@ -2,14 +2,14 @@
   "tasks": [
     {
       "title": "Learn HTML",
-      "progress": 81,
+      "progress": 69,
       "note": "Hypertext markup language",
       "completed": false,
       "id": 1
     },
     {
       "title": "Learn CSS",
-      "progress": 64,
+      "progress": 83,
       "note": "Cascading style sheet",
       "completed": false,
       "id": 2
