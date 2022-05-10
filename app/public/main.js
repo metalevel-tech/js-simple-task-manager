@@ -206,13 +206,13 @@ class Task {
 
     putTaskDataToDataBase() {       // This method is invoked by `saveTaskToDataBase()`
         fetch(`${dataBase.fqdn}/${this.data.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(this.data)
         })
             .then(response => {
                 if (response.ok) return response.json();
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.status}`);
             })
             .then(data => {
                 this.data = data;
