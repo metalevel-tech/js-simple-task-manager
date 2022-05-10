@@ -1,15 +1,24 @@
-var express = require('express');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
 var jsonServer = require('json-server');
 
-var app = express();
-// ...
+const app = express();
+const appPort = 48004;
+const appName = 'Simple task manager';
 
-// Serve the app as bundle of static files, https://expressjs.com/en/starter/static-files.html
-app.use('/', express.static('public'))
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
+app.use('/', express.static(path.join(__dirname, 'public/')));;
 
 // You may want to mount JSON Server on a specific end-point, for example /api
 // Optional except if you want to have JSON Server defaults
 // server.use('/api', jsonServer.defaults()); 
 app.use('/', jsonServer.router('data/db.json'));
 
-app.listen(48011);
+app.listen(appPort, function () {
+    console.log(`${appName} app listening on port ${appPort}!`);
+});

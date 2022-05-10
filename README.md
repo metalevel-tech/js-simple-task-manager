@@ -1,3 +1,11 @@
+# Simple Task Manager
+
+Simple JavaScript application it is a homework project, and currently it is:
+
+* Exercise of REST API Requests,
+
+* Node.js and Express.
+
 ## References
 
 * Video Tutorial: [Creating demo APIs with json-server](https://egghead.io/lessons/javascript-creating-demo-apis-with-json-server)
