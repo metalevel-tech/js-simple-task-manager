@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "title": "Learn HTML",
+      "progress": 62,
+      "note": "Hypertext markup language",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "Learn CSS",
+      "progress": 83,
+      "note": "Cascading style sheet",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "Learn JavaScript",
+      "progress": 55,
+      "note": "A programming language for web applications",
+      "completed": false,
+      "id": 3
+    }
+  ]
+}

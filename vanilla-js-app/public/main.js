@@ -1,4 +1,4 @@
-// Select the necessary DOM nodes
+// Select the necessary DOM nodes 
 const nodes = {
     taskTemplate: document.querySelector('#task-template'),
     taskListContainer: document.querySelector('#tasks'),
@@ -10,7 +10,7 @@ const nodes = {
 const dataBase = {
     url: '127.0.0.1',
     port: '48011',
-    uri: 'tasks',
+    uri: 'api/tasks',
     protocol: 'https',
     get fqdn() {
         // const url = `${this.protocol}://${this.url}/${this.uri}`;
