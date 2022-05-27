@@ -33,7 +33,6 @@ class App extends React.Component {
             tasks[taskIndex] = updatedTask;
 
             this.setState({ tasks });
-
         }
     }
 
