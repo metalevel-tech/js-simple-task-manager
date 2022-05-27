@@ -1,6 +1,8 @@
+import { getTaskDB } from './HelperFunctions';
+
 function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
     const { id, title, progress, note, completed } = data;
-    const { toSave, toRemove, isNewTask, isLocked } = controls;
+    const { toSave, toRemove, isNewTask, isLocked, copyWarning } = controls;
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
@@ -13,27 +15,22 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
     };
 
     const handleSave = (event) => {
-        if (data.progress >= 100) data.completed = true;
-        else data.completed = false;
-
-        // controls.toSave = false;
-        // controls.isNewTask = false;
-
-        console.log('Save');
-        onTaskSave(data, controls);
+        if (toSave) {
+            if (data.progress >= 100) data.completed = true;
+            else data.completed = false;
+            onTaskSave(data, controls);
+        }
     };
 
     const handleClone = (event) => {
         controls.isLocked = true;
         onTaskChange(data, controls);
-
         onTaskClone(data);
     };
 
     const handleToRemove = (event) => {
         if (toRemove) controls.toRemove = false;
         else controls.toRemove = true;
-
         onTaskChange(data, controls);
     };
 
@@ -41,7 +38,35 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
         onTaskRemove({ data, controls });
     };
 
-    const handleTaskDataFromDataBaseToClipboard = (event) => {
+    const handleTaskDataFromDataBaseToClipboard = async (event) => {
+        // Reject the operation when the task is not saved
+        if (toSave || isNewTask) {
+            controls.copyWarning = true;
+            onTaskChange(data, controls);
+
+            setTimeout(() => {
+                controls.copyWarning = false;
+                onTaskChange(data, controls);
+            }, 1500);
+            return;
+        }
+
+        // let freshTaskData = await getTaskDB({ data, controls });
+        // freshTaskData = JSON.stringify(freshTaskData, null, 4);
+
+        // navigator.clipboard.writeText(dataToCopy)
+        //     .then(() => {
+        //         this.domEl.classList.remove('task-changed-not-saved');
+
+        //         this.controls.btnCopy.classList.add('task-copied');
+        //         setTimeout(() => {
+        //             this.controls.btnCopy.classList.remove('task-copied');
+        //         }, 1500);
+        //     }, function () {
+        //         throw new Error('Unable to copy');
+        //     })
+        //     .catch(error => { console.log(error); });
+
         console.log('Copy');
     };
 
@@ -99,8 +124,10 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 />
             </div>
 
-            {isLocked ?
-                <div className="task-title-percent-locked task-btn w3-hover-theme w3-theme-d2">{progress}%</div> : null
+            {/* Elements when it is Locked/Collapsed */
+                isLocked ?
+                    <div className="task-title-percent-locked task-btn w3-hover-theme w3-theme-d2">{progress}%</div>
+                    : null
             }
 
             {/* Buttons */}
@@ -113,12 +140,12 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
             <div className={"task-lock task-btn w3-theme w3-hover-theme" + (isLocked ? " task-locked" : " task-unlocked")}
                 role="button"
                 onClick={handleTaskLock}
-            >{/*Lock/Unlock or Minimize/Maximize*/}</div>
+            >{/* Lock/Unlock or Minimize/Maximize */}</div>
 
-            <div className="task-copy-json task-btn w3-theme w3-hover-theme"
+            <div className={"task-copy-json task-btn w3-theme w3-hover-theme" + (copyWarning ? " task-copy-rejected" : "")}
                 role="button"
                 onClick={handleTaskDataFromDataBaseToClipboard}
-            >{/*Copy JSON*/}</div>
+            >{/* Copy JSON */}</div>
 
             <div className={"task-btn w3-hover-theme w3-theme-d2" + (toRemove ? " task-remove-confirm" : " task-clone")}
                 role="button"
@@ -129,7 +156,6 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 role="button"
                 onClick={handleToRemove}
             >{toRemove ? "Cancel" : "Remove"}</div>
-            {/*<div className="task-remove-cancel w3-theme-d2" role="button">Cancel</div> */}
         </div>
     );
 }
