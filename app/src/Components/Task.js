@@ -1,16 +1,13 @@
-import { getTaskDB } from './HelperFunctions';
+import { getTaskDB } from './Helpers';
 
 function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
     const { id, title, progress, note, completed } = data;
-    const { toSave, toRemove, isNewTask, isLocked, copyWarning } = controls;
+    const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = controls;
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
-
         if (data.progress < 100) data.completed = false;
-
         controls.toSave = true;
-
         onTaskChange(data, controls);
     };
 
@@ -51,23 +48,19 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
             return;
         }
 
-        // let freshTaskData = await getTaskDB({ data, controls });
-        // freshTaskData = JSON.stringify(freshTaskData, null, 4);
+        let freshTaskData = await getTaskDB({ data, controls });
+        freshTaskData = JSON.stringify(freshTaskData, null, 4);
+        
+        navigator.clipboard.writeText(freshTaskData)
+            .then(() => {
+                controls.copySuccess = true;
+                onTaskChange(data, controls);
 
-        // navigator.clipboard.writeText(dataToCopy)
-        //     .then(() => {
-        //         this.domEl.classList.remove('task-changed-not-saved');
-
-        //         this.controls.btnCopy.classList.add('task-copied');
-        //         setTimeout(() => {
-        //             this.controls.btnCopy.classList.remove('task-copied');
-        //         }, 1500);
-        //     }, function () {
-        //         throw new Error('Unable to copy');
-        //     })
-        //     .catch(error => { console.log(error); });
-
-        console.log('Copy');
+                setTimeout(() => {
+                    controls.copySuccess = false;
+                    onTaskChange(data, controls);
+                }, 1500);
+            });
     };
 
     const handleTaskLock = (event) => {
@@ -142,7 +135,10 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 onClick={handleTaskLock}
             >{/* Lock/Unlock or Minimize/Maximize */}</div>
 
-            <div className={"task-copy-json task-btn w3-theme w3-hover-theme" + (copyWarning ? " task-copy-rejected" : "")}
+            <div className={"task-copy-json task-btn w3-theme w3-hover-theme" +
+                            (copyWarning ? " task-copy-rejected" : "") + 
+                            (copySuccess ? " task-copied" : "")
+                           }
                 role="button"
                 onClick={handleTaskDataFromDataBaseToClipboard}
             >{/* Copy JSON */}</div>

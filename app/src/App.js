@@ -5,7 +5,7 @@ import { TaskComponent } from './Components/Task';
 import { Task } from './Components/TaskClass';
 import {
     getTasksListDB, removeTaskDB, saveTaskDB, newTaskId
-} from './Components/HelperFunctions';
+} from './Components/Helpers';
 
 // The main class of the application.
 class App extends React.Component {

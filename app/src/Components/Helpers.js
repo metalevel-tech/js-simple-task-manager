@@ -23,6 +23,20 @@ function generateNewTaskId(tasks) {
     return lastId + 1;
 }
 
+// AnimationApi effects
+const effectFadeIn = {
+    animation: [
+        { opacity: 0, filter: 'grayscale(1) hue-rotate(45deg)' },
+        { opacity: 1, filter: 'grayscale(0) hue-rotate(0)' }
+    ],
+    params: {
+        delay: 200,
+        duration: 500,
+        iterations: 1,
+        easing: 'ease-in'
+    }
+};
+
 // GET all tasks from DataBase
 async function getTasksListFromDataBase(tasks) {
     const request = {
