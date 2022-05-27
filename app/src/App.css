@@ -41,7 +41,7 @@ input[type=number] {
     background: #8cb1df;
     outline: none;
     opacity: 0.7;
-    -webkit-transition: .2s;
+    -webkit-transition: opacity .2s;
     transition: opacity .2s;
     padding: .1em 0;
     margin: 0;
@@ -138,29 +138,45 @@ input[type=number] {
 /* Task Grid */
 .task-container {
     grid-template:
-        [header-left] "head head head copy save" 3em [header-right]
-        [main-left] "left right right right right" 3em [main-right] 
-        [footer-left] "foot foot remove remove clone" 3em [footer-right] 
-        / 10.4em 1fr 2.5em 2.1em 5em;
+        [header-left] "title title title lock copy save" 3em [header-right]
+        [main-left] "percent slider slider slider slider slider" 3em [main-right] 
+        [footer-left] "note note note remove remove clone" 3em [footer-right] 
+        / 10.4em 1fr 3em 2.1em 2.1em 5em;
 }
 
-.task-header {
-    grid-area: head;
+.task-container.locked-task {
+    grid-template:
+        [header-left] "title title percent-locked lock copy save" 3em [header-right]
+        / 10.4em 1fr 3em 2.1em 2.1em 5em;
+}
+
+.task-title {
+    grid-area: title;
     background-color: #d3d3d3;
 }
 
-.task-left {
-    grid-area: left;
+.task-title-percent-locked { 
+    display: none;
+    grid-area: percent-locked;
+    background-color: #adadad;
+}
+
+.locked-task .task-title-percent-locked {
+    display: flex;
+}
+
+.task-percent {
+    grid-area: percent;
     background-color: #d3d3d3;
 }
 
-.task-right {
-    grid-area: right;
+.task-slider {
+    grid-area: slider;
     background-color: #f1f1f1;
 }
 
-.task-notes {
-    grid-area: foot;
+.task-note {
+    grid-area: note;
     background-color: #d3d3d3;
 }
 
@@ -179,8 +195,22 @@ input[type=number] {
     grid-area: clone;
 }
 
+.task-lock {
+    grid-area: lock;
+}
+
 .task-copy-json {
     grid-area: copy;
+}
+
+.locked-task .task-remove,
+.locked-task .task-remove-cancel,
+.locked-task .task-remove-confirm,
+.locked-task .task-clone,
+.locked-task .task-percent,
+.locked-task .task-slider,
+.locked-task .task-note {
+    display: none;
 }
 
 /* Task elements content positioning */
@@ -265,7 +295,21 @@ input[type=number] {
 }
 
 .task-btn:hover {
-    transition: .6s;
+    transition: background-color .6s;
+}
+
+.task-lock {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1em;
+    color: rgba(255, 255, 255, 0.8);
+}
+.task-locked {
+    background-image: url('./assets/lock.svg');
+}
+
+.task-unlocked {
+    background-image: url('./assets/unlock.svg');
 }
 
 .task-copy-json {
@@ -274,7 +318,6 @@ input[type=number] {
     background-position: center;
     background-size: 1em;
     color: rgba(255, 255, 255, 0.8);
-    /* transition: background-color .1s, box-shadow .1s; */
 }
 
 .task-copy-json.task-copied {

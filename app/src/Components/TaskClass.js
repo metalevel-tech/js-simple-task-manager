@@ -11,10 +11,11 @@ class Task {
     };
     // Stores specific data for the 'state' of the TaskComponent instances.
     controls = {
-        save: false,     // the task is not saved to the data base
-        toRemove: false, // mark the task for deletion
-        remove: false,   // remove from data base
-        new: true        // the task is new
+        toSave: false,      // the task is not saved to the data base
+        toRemove: false,    // mark the task for deletion
+        doRemove: false,    // remove from data base
+        isNewTask: true,    // the task is new
+        isLocked: false     // the task is locked
     };
 
     constructor(data) {

@@ -15,21 +15,13 @@ class App extends React.Component {
         };
     }
 
-    handleTaskDataChange = (data) => {
+    handleTaskChange = (data, controls) => {
         const tasks = [...this.state.tasks];
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
-        tasks[taskIndex].data = data;
-
-        console.log(data.id, taskIndex);
-        this.setState({ tasks });
-    }
-
-    handleTaskStateChange = (data, controls) => {
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex(task => task.data.id === data.id);
-
-        tasks[taskIndex].controls = controls;
+        tasks[taskIndex] = { data, controls };
+        // tasks[taskIndex].controls = controls;
+        // this.setState(tasks[taskIndex]);
 
         console.log(data.id, taskIndex);
         this.setState({ tasks });
@@ -74,15 +66,14 @@ class App extends React.Component {
         return lastId + 1;
     }
 
-    renderTask({ data, controls }) {
+    renderTask(task) {
         return (
             <TaskComponent
-                key={`task-${data.id}`}
-                task={data}
-                controls={controls}
-                onDataChange={this.handleTaskDataChange}
-                onStateChange={this.handleTaskStateChange}
-                onCloneTask={this.handleAddNewTask}
+                key={`task-${task.data.id}`}
+                data={task.data}
+                controls={task.controls}
+                onTaskChange={this.handleTaskChange}
+                onTaskClone={this.handleAddNewTask}
             />
         );
     }

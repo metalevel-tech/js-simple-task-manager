@@ -22,7 +22,10 @@ async function getTasksListFromDataBase(tasks) {
         .then(data => {
             data.forEach(taskData => {
                 const task = new Task(taskData);
-                task.controls.new = false;
+                
+                task.controls.isNewTask = false;
+                task.controls.isLocked = true;
+                
                 tasks.push(task);
             });
 
