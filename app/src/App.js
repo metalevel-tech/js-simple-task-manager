@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { NavComponent } from './Components/Navigation';
 import { TaskComponent } from './Components/Task';
-import { getTasksListDB } from './Components/FetchHelpers';
+import { getTasksListDB, removeTaskDB, saveTaskDB } from './Components/FetchHelpers';
 import { Task } from './Components/TaskClass';
 
 // The main class of the application.
@@ -18,19 +18,39 @@ class App extends React.Component {
     handleTaskChange = (data, controls) => {
         const tasks = [...this.state.tasks];
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
-
         tasks[taskIndex] = { data, controls };
-        // tasks[taskIndex].controls = controls;
-        // this.setState(tasks[taskIndex]);
-
-        console.log(data.id, taskIndex);
         this.setState({ tasks });
+    }
+
+    handleTaskSave = async (data, controls) => {
+        if (controls.toSave) {
+            const tasks = [...this.state.tasks];
+            const taskIndex = tasks.findIndex(task => task.data.id === data.id);
+
+            const updatedTask = await saveTaskDB({ data, controls });
+            tasks[taskIndex] = updatedTask;
+
+            this.setState({ tasks });
+
+        }
+    }
+
+    handleTaskRemove = async ({ data, controls }) => {
+        const tasks = [...this.state.tasks];
+        const taskIndex = tasks.findIndex(task => task.data.id === data.id);
+
+        // array.splice() returns an array of the removed items
+        const removedTask = tasks.splice(taskIndex, 1)[0];
+
+        await removeTaskDB(removedTask).then(() => {
+            this.setState({ tasks })
+        });
     }
 
     handleAddNewTask = (data) => {
         // When the 'data' is not provided it is a new task creation.
         // Otherwise it is a clone of an existing task.
-        const newTaskData = {...data} || {
+        const newTaskData = { ...data } || {
             id: 0,
             title: '',
             progress: 0,
@@ -74,6 +94,8 @@ class App extends React.Component {
                 controls={task.controls}
                 onTaskChange={this.handleTaskChange}
                 onTaskClone={this.handleAddNewTask}
+                onTaskRemove={this.handleTaskRemove}
+                onTaskSave={this.handleTaskSave}
             />
         );
     }

@@ -1,6 +1,6 @@
-function TaskComponent({ data, controls, onTaskChange, onTaskClone }) {
+function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
     const { id, title, progress, note, completed } = data;
-    const { toSave, doRemove, toRemove, isNewTask, isLocked } = controls;
+    const { toSave, toRemove, isNewTask, isLocked } = controls;
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
@@ -15,35 +15,36 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone }) {
     const handleSave = (event) => {
         if (data.progress >= 100) data.completed = true;
         else data.completed = false;
-        
-        controls.toSave = false;
-        controls.isNewTask = false;
-        
+
+        // controls.toSave = false;
+        // controls.isNewTask = false;
+
         console.log('Save');
-        onTaskChange(data, controls);
+        onTaskSave(data, controls);
     };
-    
+
     const handleClone = (event) => {
         controls.isLocked = true;
         onTaskChange(data, controls);
+
         onTaskClone(data);
     };
-    
+
     const handleToRemove = (event) => {
         if (toRemove) controls.toRemove = false;
         else controls.toRemove = true;
 
         onTaskChange(data, controls);
     };
-    
+
     const handleRemove = (event) => {
-        console.log('Remove');
+        onTaskRemove({ data, controls });
     };
 
     const handleTaskDataFromDataBaseToClipboard = (event) => {
         console.log('Copy');
     };
-    
+
     const handleTaskLock = (event) => {
         controls.isLocked = !isLocked;
         onTaskChange(data, controls);
@@ -52,7 +53,7 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone }) {
     return (
         <div data-id={id}
             className={"task-container" +
-                (completed ? " completed-task" : "") + 
+                (completed ? " completed-task" : "") +
                 (toRemove ? " task-to-remove" : "") +
                 (isNewTask ? " new-task-not-saved" : "") +
                 (toSave ? " task-changed-not-saved" : "") +
@@ -97,8 +98,6 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone }) {
                     onChange={(e) => handleDataChange(e, 'note')}
                 />
             </div>
-
-            {/* .locked-task .task-title-percent-locked { */}
 
             {isLocked ?
                 <div className="task-title-percent-locked task-btn w3-hover-theme w3-theme-d2">{progress}%</div> : null
