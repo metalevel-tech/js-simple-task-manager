@@ -107,7 +107,7 @@ class App extends React.Component {
     }
 
     async getTaskListFromDataBase(tasks) {
-        return await fetch(dataBase.fqdn)
+        return fetch(dataBase.fqdn)
             .then(response => {
                 if (response.ok) return response.json();
                 throw new Error(`Network response was not ok: ${response.status}`);
