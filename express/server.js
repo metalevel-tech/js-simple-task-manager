@@ -21,5 +21,5 @@ app.use('/', express.static(path.join(__dirname, 'public/')));;
 app.use('/api/', jsonServer.router(path.join(__dirname, 'data/db.json')));
 
 app.listen(appPort, function () {
-    console.log(`${appName} app listening on port ${appPort}!`);
+    console.log(`${appName} app listening on http://localhost:${appPort}`);
 });

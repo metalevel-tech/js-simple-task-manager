@@ -1,6 +1,6 @@
-function TaskComponent({ task, controls, onDataChange, onStateChange }) {
+function TaskComponent({ task, controls, onDataChange, onStateChange, onCloneTask }) {
     const { id, title, progress, note, completed } = task;
-    const { save, remove, toRemove } = controls;
+    const { save, remove, toRemove, new: isNewTask } = controls;
 
     const handleDataChange = (event, property) => {
         task[property] = event.target.value;
@@ -14,7 +14,13 @@ function TaskComponent({ task, controls, onDataChange, onStateChange }) {
         if (task.progress >= 100) task.completed = true;
         else task.completed = false;
 
+        console.log('Save');
         onDataChange(task);
+    };
+    
+    const handleClone = (event) => {
+        // const newTask = { ...task };
+        onCloneTask(task);
     };
     
     const handleToRemove = (event) => {
@@ -23,14 +29,23 @@ function TaskComponent({ task, controls, onDataChange, onStateChange }) {
 
         onStateChange(task, controls);
     };
-
-    const handleTaskDataFromDataBaseToClipboard = (event) => {
-
+    
+    const handleRemove = (event) => {
+        console.log('Remove');
     };
 
+    const handleTaskDataFromDataBaseToClipboard = (event) => {
+        console.log('Copy');
+    };
 
     return (
-        <div className={"task-container" + (completed ? " completed-task" : "")} data-id={id}>
+        <div data-id={id}
+            className={"task-container" +
+                (completed ? " completed-task" : "") + 
+                (toRemove ? " task-to-remove" : "") +
+                (isNewTask ? " new-task-not-saved" : "")
+            }
+        >
 
             {/* Inputs */}
 
@@ -83,14 +98,16 @@ function TaskComponent({ task, controls, onDataChange, onStateChange }) {
                 onClick={handleTaskDataFromDataBaseToClipboard}
             >{/*Copy JSON*/}</div>
 
-            <div className="task-clone task-btn w3-theme-d2 w3-hover-theme" role="button">Clone</div>
-            {/*<div className="task-remove-confirm task-btn w3-theme-d2 w3-hover-theme" role="button">Confirm</div> */}
+            <div className={"task-btn w3-hover-theme w3-theme-d2" + (toRemove ? " task-remove-confirm" : " task-clone")}
+                role="button"
+                onClick={toRemove ? handleRemove : handleClone}
+            >{toRemove ? "Confirm" : "Clone"}</div>
 
-            <div className="task-remove task-btn w3-theme-l1 w3-hover-theme"
+            <div className={"task-btn w3-hover-theme" + (toRemove ? " task-remove-cancel w3-theme-d2" : " task-remove w3-theme-l1")}
                 role="button"
                 onClick={handleToRemove}
             >{toRemove ? "Cancel" : "Remove"}</div>
-            {/*<div className="task-remove-cancel task-btn w3-theme-d2 w3-hover-theme" role="button">Cancel</div> */}
+            {/*<div className="task-remove-cancel w3-theme-d2" role="button">Cancel</div> */}
         </div>
     );
 }

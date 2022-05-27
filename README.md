@@ -2,11 +2,11 @@
 
 Simple JavaScript/React application it is a homework project, and currently it is:
 
-* Exercise of REST API Requests,
+* Exercise of REST API Requests
 
-* Node.js and Express,
+* Node.js and Express
 
-* React.js.
+* React.js
 
 ## Deploy and run
 
