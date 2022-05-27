@@ -86,7 +86,8 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 <input className="input-task-title" id={"task-title-" + id}
                     type="text" name="title" placeholder="Enter task title"
                     value={title}
-                    onChange={(e) => handleDataChange(e, 'title')}
+                    onChange={(e) => handleDataChange(e, "title")} 
+                    readOnly={isLocked}
                 />
             </div>
 
@@ -95,7 +96,7 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 <input className="input-progress-number" id={"task-percentage-" + id}
                     type="number" name="number" min="1" max="100" placeholder="0"
                     value={progress}
-                    onChange={(e) => handleDataChange(e, 'progress')}
+                    onChange={(e) => handleDataChange(e, "progress")}
                 />
             </div>
 
@@ -104,7 +105,7 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 <input className="input-progress-slider" id={"task-percentage-" + id}
                     type="range" name="slider" min="1" max="100" placeholder="0"
                     value={progress}
-                    onChange={(e) => handleDataChange(e, 'progress')}
+                    onChange={(e) => handleDataChange(e, "progress")}
                 />
             </div>
 
@@ -113,13 +114,13 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                 <input className="input-task-note" id="task-note-0"
                     type="text" name="note" placeholder="Enter a note"
                     value={note}
-                    onChange={(e) => handleDataChange(e, 'note')}
+                    onChange={(e) => handleDataChange(e, "note")}
                 />
             </div>
 
             {/* Elements when it is Locked/Collapsed */
                 isLocked ?
-                    <div className="task-title-percent-locked task-btn w3-hover-theme w3-theme-d2">{progress}%</div>
+                    <div className="task-title-percent-locked task-btn w3-hover-theme w3-theme-d2">{progress}<sup>%</sup></div>
                     : null
             }
 

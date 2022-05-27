@@ -385,7 +385,13 @@ input[type=number] {
 } */
 
 
-/* Hide the template */
+Hide the template
 #task-template {
     display: none;
+}
+
+.task-title-percent-locked sup {
+    position: relative;
+    top: -.25em;
+    right: -.15em;
 }

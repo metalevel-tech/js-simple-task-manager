@@ -2,7 +2,7 @@
   "tasks": [
     {
       "title": "Learn HTML",
-      "progress": "49",
+      "progress": "72",
       "note": "Hypertext markup language",
       "completed": false,
       "id": 1
@@ -16,10 +16,17 @@
     },
     {
       "title": "Learn JavaScript",
-      "progress": "45",
+      "progress": "61",
       "note": "A programming language for web applications",
       "completed": false,
       "id": 3
+    },
+    {
+      "title": "Learn React",
+      "progress": "13",
+      "note": "It's not complicated",
+      "completed": false,
+      "id": 4
     }
   ]
 }

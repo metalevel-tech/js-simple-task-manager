@@ -4,9 +4,9 @@ class Task {
     // The task data from the database.
     data = {
         id: 0,
-        title: '',
+        title: "",
         progress: 0,
-        note: '',
+        note: "",
         completed: false
     };
     // Stores specific data for the 'state' of the TaskComponent instances.
