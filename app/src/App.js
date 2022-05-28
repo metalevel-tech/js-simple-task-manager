@@ -32,7 +32,8 @@ class App extends React.Component {
         statistics.new = this.state.tasks.filter(task => task.controls.isNewTask).length;
         statistics.unsaved = this.state.tasks.filter(task => task.controls.toSave).length;
 
-        return statistics;
+        // return statistics;
+        this.setState({ statistics });
     }
 
     handleTaskChange = (data, controls) => {
@@ -42,7 +43,7 @@ class App extends React.Component {
 
         // const statistics = this.buildStatistics();
 
-        this.setState({ tasks/*, statistics*/ });
+        this.setState({ tasks }, this.buildStatistics);
     }
 
     handleTaskSave = async (data, controls) => {
@@ -50,12 +51,16 @@ class App extends React.Component {
             const tasks = [...this.state.tasks];
             const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
+            // Invalidate the marker for the task to be saved.
+            controls.toRemove = false;
+
             const updatedTask = await saveTaskDB({ data, controls });
+
             tasks[taskIndex] = updatedTask;
 
             // const statistics = this.buildStatistics();
         
-            this.setState({ tasks/*, statistics*/ });
+            this.setState({ tasks }, this.buildStatistics);
         }
     }
 
@@ -70,10 +75,10 @@ class App extends React.Component {
         
         // Deal with the situation when the removed object is not saved to the DataBase.
         if (controls.isNewTask) {
-            this.setState({ tasks/*, statistics*/ });
+            this.setState({ tasks }, this.buildStatistics);
         } else {
             await removeTaskDB(removedTask).then(() => {
-                this.setState({ tasks/*, statistics*/ });
+                this.setState({ tasks }, this.buildStatistics);
             });
         }
     }
@@ -83,7 +88,7 @@ class App extends React.Component {
 
         // When the 'data' is not provided it is a new task creation,
         // otherwise it is a clone of an existing task.
-        // We must create deep copy of the data, to avoid changing the original,
+        // We must create a deep copy of the data, to avoid changing the original,
         // otherwise the next if statement will fail.
         const newTaskData = data ? { ...data } : {
             id: 0,
@@ -108,7 +113,7 @@ class App extends React.Component {
 
         // const statistics = this.buildStatistics();
         
-        this.setState({ tasks/*, statistics*/ });
+        this.setState({ tasks }, this.buildStatistics);
     };
 
     handleLoadTaskListDB = async (event) => {
@@ -117,7 +122,7 @@ class App extends React.Component {
         
         // const statistics = this.buildStatistics();
         
-        this.setState({ tasks/*, statistics*/ });
+        this.setState({ tasks }, this.buildStatistics);
     }
 
     handleSaveAllTasks = (event) => {

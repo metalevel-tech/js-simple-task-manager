@@ -1,0 +1,74 @@
+{
+  "tasks": [
+    {
+      "title": "Learn HTML",
+      "progress": "68",
+      "note": "Hypertext markup language",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "Learn CSS",
+      "progress": 83,
+      "note": "Cascading style sheet",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "Learn JavaScript",
+      "progress": "61",
+      "note": "A programming language for web applications",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "title": "Learn React",
+      "progress": "16",
+      "note": "It's not complicated",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "title": "Test:1",
+      "progress": "100",
+      "note": "",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "title": "",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 6
+    },
+    {
+      "title": "",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 7
+    },
+    {
+      "title": "",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 8
+    },
+    {
+      "title": "",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 9
+    },
+    {
+      "title": "",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 10
+    }
+  ]
+}

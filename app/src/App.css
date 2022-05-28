@@ -216,6 +216,12 @@ input[type=number] {
     grid-area: copy;
 }
 
+.task-to-remove .task-remove-cancel,
+.task-to-remove .task-remove-confirm,
+.completed-task .task-completed {
+    display: flex;
+}
+
 .locked-task .task-remove,
 .locked-task .task-remove-cancel,
 .locked-task .task-remove-confirm,
@@ -383,12 +389,6 @@ input[type=number] {
 
 .completed-task .task-remove-confirm {
     filter: brightness(1.1) saturate(5);
-}
-
-.task-to-remove .task-remove-cancel,
-.task-to-remove .task-remove-confirm,
-.completed-task .task-completed {
-    display: flex;
 }
 
 /* .task-to-remove .task-remove,

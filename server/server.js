@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-var jsonServer = require('json-server');
+const jsonServer = require('json-server');
 
 const app = express();
 const appPort = 48004;
@@ -12,8 +12,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-// Run the vanilla-js-app
-app.use('/', express.static(path.join(__dirname, 'public/')));;
+// Serve the vanilla-js-app
+// app.use('/', express.static(path.join(__dirname, 'public/')));;
+app.use('/', express.static(path.join(__dirname, '../app/build/')));;
 
 // You may want to mount JSON Server on a specific end-point, for example /api
 // Optional except if you want to have JSON Server defaults

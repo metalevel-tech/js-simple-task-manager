@@ -58,6 +58,7 @@ async function getTasksListFromDataBase(tasks) {
 
                 task.controls.isNewTask = false;
                 task.controls.isLocked = true;
+                task.controls.toSave = false;
 
                 tasks.push(task);
             });

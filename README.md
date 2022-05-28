@@ -1,6 +1,6 @@
 # Simple Task Manager
 
-Simple JavaScript/React application it is a homework project, and currently it is:
+Simple JavaScript/React application - a homework project, and currently it is:
 
 * Exercise of REST API Requests
 
@@ -8,12 +8,14 @@ Simple JavaScript/React application it is a homework project, and currently it i
 
 * React.js
 
-## Deploy and run
+## Dev deploy and run
+
+Start the backend server. Currently it is implementation of 
 
 ```bash
-cd express
+cd server
 mpm install
-npm run watch # npm start
+npm run supervisor
 ```
 
 Currently, the Express server will run at `http://localhost:48004` and will provide the Json-server at `http://localhost:48004/api[/tasks]`.
@@ -24,7 +26,7 @@ mpm install
 npm start
 ```
 
-The React's dev web server will run at `http://localhost:3000` and will proxy all requests for non static resources to the Express server's port. So we can access the Json-server at `http://localhost:3000/api[/tasks]`.
+The React's dev web server, by default, will run at `http://localhost:3000` and will proxy all requests for non static resources to the Express server's port. So we can access the Json-server at `http://localhost:3000/api[/tasks]`.
 
 ## Json-server
 
