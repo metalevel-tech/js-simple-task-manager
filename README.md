@@ -10,7 +10,7 @@ Simple JavaScript/React application - a homework project, and currently it is:
 
 ## Development deploy and run
 
-Start the backend server. Currently it is implementation of Express that provides Json-server.
+Start the backend server. It is implementation of Express that provides Json-server. The Express server will run at `http://localhost:48004` and will provide the Json-server at `http://localhost:48004/api[/tasks]`.
 
 ```bash
 cd server
@@ -19,7 +19,7 @@ npm run db-create
 npm run supervisor
 ```
 
-Currently, the Express server will run at `http://localhost:48004` and will provide the Json-server at `http://localhost:48004/api[/tasks]`.
+Push the running server as background process or open new terminal and start the React's dev server.
 
 ```bash
 cd app
@@ -27,17 +27,19 @@ npm install
 npm start
 ```
 
-The React's dev web server, by default, will run at `http://localhost:3000` and will proxy all requests for non static resources to the Express server's port. So we can access the Json-server at `http://localhost:3000/api[/tasks]`.
+The React's dev web server, by default, will run at `http://localhost:3000`. It will proxy all requests for non static resources to the Express server's port - check the `"proxy"` directive in [package.json](./app/package.json). So we can access the Json-server at `http://localhost:3000/api[/tasks]`.
 
 ## Production build and run
 
-In this case we need to build the React application. Then it will be served via the Express server. and everything will be accessible at `http://localhost:48004`.
+In this case we need to build the React application. Then it will be served via the Express server. And everything will be accessible at `http://localhost:48004`.
 
 ```bash
 cd app && npm i && npm run build
 cd -
 cd server && npm i && npm run db-create && npm start
 ```
+
+*Read [CLI.md](./CLI.md) For more information.*
 
 ## Json-server
 

@@ -97,7 +97,7 @@ input[type=number] {
 
 /* Navigator grid */
 .tasks-nav {
-    margin-top: 1em;
+    margin-top: 2em;
     grid-template:
         [header-left] "label save-all reload new new" 3em [header-right]
         /* [main-left] "percent slider slider slider slider slider" 3em [main-right]  */
