@@ -8,6 +8,6 @@ RUN npm install && npm run build
 
 WORKDIR /server
 COPY ./server/ ./
-RUN npm install
+RUN npm install && npm run db-create
 
 CMD ["npm", "start"]

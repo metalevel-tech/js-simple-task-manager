@@ -15,6 +15,7 @@ Start the backend server. Currently it is implementation of Express that provide
 ```bash
 cd server
 npm install
+npm run db-create
 npm run supervisor
 ```
 
@@ -35,7 +36,7 @@ In this case we need to build the React application. Then it will be served via 
 ```bash
 cd app && npm i && npm run build
 cd -
-cd server && npm i && npm start
+cd server && npm i && npm run db-create && npm start
 ```
 
 ## Json-server

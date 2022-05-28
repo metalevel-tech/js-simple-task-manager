@@ -18,7 +18,7 @@ app.use('/', express.static(path.join(__dirname, '../app/build/')));;
 // You may want to mount JSON Server on a specific end-point, for example /api
 // Optional except if you want to have JSON Server defaults
 // server.use('/api', jsonServer.defaults()); 
-app.use('/api/', jsonServer.router(path.join(__dirname, 'data/db.json')));
+app.use('/api/', jsonServer.router(path.join(__dirname, 'data/run.db.json')));
 
 app.listen(appPort, function () {
     console.log(`${appName} app listening on http://localhost:${appPort}`);

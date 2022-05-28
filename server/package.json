@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "db-create": "cp data/db.json data/run.db.json",
     "start": "node server.js",
     "supervisor": "supervisor server.js"
   },
