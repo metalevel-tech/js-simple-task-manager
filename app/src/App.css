@@ -130,8 +130,10 @@ input[type=number] {
 
 .tasks-nav-save-all {
     grid-area: save-all;
-    background-image: url('./assets/database.svg');
-    background-size: 1.15em;
+    background-image: url('./assets/file-arrow-up.svg');
+    background-size: 1em;
+    /* background-image: url('./assets/cloud-arrow-up.svg');
+    background-size: 1.2em; */
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -140,6 +142,8 @@ input[type=number] {
     grid-area: reload;
     background-image: url('./assets/arrow-rotate-right.svg');
     background-size: 1.4em;
+    /* background-image: url('./assets/cloud-arrow-down.svg');
+    background-size: 1.2em; */
     background-repeat: no-repeat;
     background-position: center;
 }

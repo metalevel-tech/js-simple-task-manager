@@ -13,15 +13,36 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            tasks: []
+            tasks: [],
+            statistics: {
+                total: 0,
+                completed: 0,
+                uncompleted: 0,
+                new: 0,
+                unsaved: 0
+            },
         };
+    }
+
+    buildStatistics() {
+        const statistics = {...this.state.statistics};
+        statistics.total = this.state.tasks.length;
+        statistics.completed = this.state.tasks.filter(task => task.data.completed).length;
+        statistics.uncompleted = statistics.total - statistics.completed;
+        statistics.new = this.state.tasks.filter(task => task.controls.isNewTask).length;
+        statistics.unsaved = this.state.tasks.filter(task => task.controls.toSave).length;
+
+        return statistics;
     }
 
     handleTaskChange = (data, controls) => {
         const tasks = [...this.state.tasks];
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
         tasks[taskIndex] = { data, controls };
-        this.setState({ tasks });
+
+        // const statistics = this.buildStatistics();
+
+        this.setState({ tasks/*, statistics*/ });
     }
 
     handleTaskSave = async (data, controls) => {
@@ -32,7 +53,9 @@ class App extends React.Component {
             const updatedTask = await saveTaskDB({ data, controls });
             tasks[taskIndex] = updatedTask;
 
-            this.setState({ tasks });
+            // const statistics = this.buildStatistics();
+        
+            this.setState({ tasks/*, statistics*/ });
         }
     }
 
@@ -43,12 +66,14 @@ class App extends React.Component {
         // array.splice() returns an array of the removed items
         const removedTask = tasks.splice(taskIndex, 1)[0];
 
+        // const statistics = this.buildStatistics();
+        
         // Deal with the situation when the removed object is not saved to the DataBase.
         if (controls.isNewTask) {
-            this.setState({ tasks });
+            this.setState({ tasks/*, statistics*/ });
         } else {
             await removeTaskDB(removedTask).then(() => {
-                this.setState({ tasks });
+                this.setState({ tasks/*, statistics*/ });
             });
         }
     }
@@ -81,13 +106,18 @@ class App extends React.Component {
             tasks.unshift(newTask);
         }
 
-        this.setState({ tasks });
+        // const statistics = this.buildStatistics();
+        
+        this.setState({ tasks/*, statistics*/ });
     };
 
-    handleReloadTaskList = async (event) => {
+    handleLoadTaskListDB = async (event) => {
         let tasks = [];
         tasks = await getTasksListDB(tasks);
-        this.setState({ tasks });
+        
+        // const statistics = this.buildStatistics();
+        
+        this.setState({ tasks/*, statistics*/ });
     }
 
     handleSaveAllTasks = (event) => {
@@ -118,8 +148,9 @@ class App extends React.Component {
                 <NavComponent
                     key="nav"
                     onAddNewTask={this.handleAddNewTask}
-                    onReloadTaskList={this.handleReloadTaskList}
+                    onReloadTaskList={this.handleLoadTaskListDB}
                     onSaveAllTasks={this.handleSaveAllTasks}
+                    statistics={this.state.statistics}
                 />
 
                 <div id="tasks">
@@ -130,7 +161,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        this.handleReloadTaskList();
+        this.handleLoadTaskListDB();
         // let tasks = [...this.state.tasks];
         // tasks = await getTasksListDB(tasks);
         // this.setState({ tasks });

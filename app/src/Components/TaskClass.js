@@ -15,7 +15,7 @@ class Task {
         toRemove: false,    // mark the task for deletion
         isNewTask: true,    // the task is new
         isLocked: false,    // the task is locked
-        copyWarning: false, // the task is not saved to the data base
+        copyWarning: false, // change start when try to copy JSON for unsaved tasks
         copySuccess: false, // the task is copied to the clipboard
     };
 
