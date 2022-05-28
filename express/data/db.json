@@ -27,6 +27,20 @@
       "note": "It's not complicated",
       "completed": false,
       "id": 4
+    },
+    {
+      "title": "Learn CSS (copy)",
+      "progress": "62",
+      "note": "Cascading style sheet",
+      "completed": false,
+      "id": 6
+    },
+    {
+      "title": "123",
+      "progress": 0,
+      "note": "",
+      "completed": false,
+      "id": 7
     }
   ]
 }

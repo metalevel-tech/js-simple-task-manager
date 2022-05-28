@@ -32,7 +32,7 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
     };
 
     const handleRemove = (event) => {
-        onTaskRemove({ data, controls });
+        onTaskRemove(data, controls);
     };
 
     const handleTaskDataFromDataBaseToClipboard = async (event) => {

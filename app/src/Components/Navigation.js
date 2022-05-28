@@ -5,9 +5,16 @@ function NavComponent(props) {
                 <p>Simple task manager</p>
             </div>
 
+            <div className="tasks-nav-save-all task-btn w3-theme-d2 w3-hover-theme"
+                role="button" 
+                title="Save all tasks to the database."
+                onClick={props.onSaveAllTasks}
+            >{/* Reload all */}</div>
+
             <div className="tasks-nav-reload task-btn w3-theme-d2 w3-hover-theme"
                 role="button" 
                 title="Reload data. Unsaved changes will be lost."
+                onClick={props.onReloadTaskList}
             >{/* Reload all */}</div>
 
             <div className="tasks-nav-add-new task-btn w3-theme-d2 w3-hover-theme"

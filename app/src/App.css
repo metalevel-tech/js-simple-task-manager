@@ -99,8 +99,9 @@ input[type=number] {
 .tasks-nav {
     margin-top: 1em;
     grid-template:
-        [header-left] "label reload new" 3em [header-right]
-        / 1fr 2.6em 7em;
+        [header-left] "label save-all reload new new" 3em [header-right]
+        /* [main-left] "percent slider slider slider slider slider" 3em [main-right]  */
+        / 1fr 2.6em 2.6em 2.6em 2.6em;
 }
 
 .tasks-nav-label {
@@ -124,7 +125,15 @@ input[type=number] {
 
 .tasks-nav-add-new {
     grid-area: new;
-    font-size: 1.4em;
+    font-size: 1.1em;
+}
+
+.tasks-nav-save-all {
+    grid-area: save-all;
+    background-image: url('./assets/database.svg');
+    background-size: 1.15em;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .tasks-nav-reload {

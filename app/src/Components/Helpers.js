@@ -20,7 +20,10 @@ function generateNewTaskId(tasks) {
         (acc, task) => (task.data.id > acc) ? acc = task.data.id : acc, 0
     );
 
-    return lastId + 1;
+    return lastId + 1 + 1000000;
+    // + 1000000 to make sure the id is always greater than the last one.
+    // This is to avoid the situation, when the server generates the same id
+    // for the object cleated as 'second' but saved as 'first'....
 }
 
 // AnimationApi effects

@@ -36,16 +36,21 @@ class App extends React.Component {
         }
     }
 
-    handleTaskRemove = async ({ data, controls }) => {
+    handleTaskRemove = async (data, controls) => {
         const tasks = [...this.state.tasks];
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
         // array.splice() returns an array of the removed items
         const removedTask = tasks.splice(taskIndex, 1)[0];
 
-        await removeTaskDB(removedTask).then(() => {
-            this.setState({ tasks })
-        });
+        // Deal with the situation when the removed object is not saved to the DataBase.
+        if (controls.isNewTask) {
+            this.setState({ tasks });
+        } else {
+            await removeTaskDB(removedTask).then(() => {
+                this.setState({ tasks });
+            });
+        }
     }
 
     handleAddNewTask = (data) => {
@@ -79,6 +84,20 @@ class App extends React.Component {
         this.setState({ tasks });
     };
 
+    handleReloadTaskList = async (event) => {
+        let tasks = [];
+        tasks = await getTasksListDB(tasks);
+        this.setState({ tasks });
+    }
+
+    handleSaveAllTasks = (event) => {
+        const tasks = [...this.state.tasks];
+
+        tasks.forEach(task => {
+            this.handleTaskSave(task.data, task.controls);
+        });
+    }
+
     renderTask(task) {
         return (
             <TaskComponent
@@ -99,6 +118,8 @@ class App extends React.Component {
                 <NavComponent
                     key="nav"
                     onAddNewTask={this.handleAddNewTask}
+                    onReloadTaskList={this.handleReloadTaskList}
+                    onSaveAllTasks={this.handleSaveAllTasks}
                 />
 
                 <div id="tasks">
@@ -109,9 +130,10 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        let tasks = [...this.state.tasks];
-        tasks = await getTasksListDB(tasks);
-        this.setState({ tasks });
+        this.handleReloadTaskList();
+        // let tasks = [...this.state.tasks];
+        // tasks = await getTasksListDB(tasks);
+        // this.setState({ tasks });
     }
 }
 
