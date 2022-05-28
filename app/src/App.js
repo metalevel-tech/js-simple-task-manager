@@ -2,10 +2,10 @@ import React from 'react';
 import './App.css';
 import { NavComponent } from './Components/Navigation';
 import { TaskComponent } from './Components/Task';
-import { Task } from './Components/TaskClass';
+import { Task } from './Helpers/TaskClass';
 import {
     getTasksListDB, removeTaskDB, saveTaskDB, newTaskId
-} from './Components/Helpers';
+} from './Helpers/FetchFunctions';
 
 // The main class of the application.
 class App extends React.Component {

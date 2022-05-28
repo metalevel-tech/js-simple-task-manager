@@ -1,4 +1,4 @@
-import { getTaskDB } from './Helpers';
+import { getTaskDB } from '../Helpers/FetchFunctions';
 
 function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
     const { id, title, progress, note, completed } = data;

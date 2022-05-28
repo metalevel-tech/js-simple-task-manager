@@ -12,8 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-// Serve the vanilla-js-app
-// app.use('/', express.static(path.join(__dirname, 'public/')));;
+// Serve the static files from '../app/build/'
 app.use('/', express.static(path.join(__dirname, '../app/build/')));;
 
 // You may want to mount JSON Server on a specific end-point, for example /api
