@@ -157,15 +157,15 @@ input[type=number] {
 /* Task Grid */
 .task-container {
     grid-template:
-        [header-left] "title title title lock copy save" 2.6em [header-right]
-        [main-left] "percent slider slider slider slider slider" 2.6em [main-right] 
-        [footer-left] "note note note remove remove clone" 2.6em [footer-right] 
+        [header-left] "title title title lock copy save" 3em [header-right]
+        [main-left] "percent slider slider slider slider slider" 3em [main-right] 
+        [footer-left] "note note note remove remove clone" 3em [footer-right] 
         / 10.4em 1fr 3em 2.1em 2.1em 5em;
 }
 
 .task-container.locked-task {
     grid-template:
-        [header-left] "title title percent-locked lock copy save" 2.6em [header-right]
+        [header-left] "title title percent-locked lock copy save" 3em [header-right]
         / 10.4em 1fr 3em 2.1em 2.1em 5em;
 }
 
@@ -240,7 +240,7 @@ input[type=number] {
 
 /* Task elements content positioning */
 .task-element {
-    padding: 0 1.2em 0 1.2em;
+    padding: .1em .8em 0;
     /* Enable flex-box to align the content*/
     display: flex;
     /* align vertical */
@@ -419,25 +419,25 @@ Hide the template
 @media screen and (max-width: 380px) {
     .task-container {
         grid-template:
-            [header-left] "title title title lock copy save" 2.6em [header-right]
-            [main-left] "percent slider slider slider slider slider" 2.6em [main-right] 
-            [footer-left] "note note note remove remove clone" 2.6em [footer-right] 
+            [header-left] "title title title lock copy save" 3em [header-right]
+            [main-left] "percent slider slider slider slider slider" 3em [main-right] 
+            [footer-left] "note note note remove remove clone" 3em [footer-right] 
             / 8.4em 1fr 3em 2.1em 2.1em 3.2em;
     }
     
     .task-container.locked-task {
         grid-template:
-            [header-left] "title title percent-locked lock copy save" 2.6em [header-right]
+            [header-left] "title title percent-locked lock copy save" 3em [header-right]
             / 8.4em 1fr 3em 2.1em 2.1em 3.2em;
     }
 
     .task-element {
-        padding: 0 .2em 0 0.4em;
+        padding: .1em .3em 0;
         overflow: hidden;
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 340px) {
     .tasks-nav {
         grid-template:
             [header-left] "label reload new new" 3em [header-right]
@@ -446,15 +446,15 @@ Hide the template
 
     .task-container {
         grid-template:
-            [header-left] "title title title lock save" 2.6em [header-right]
-            [main-left] "percent slider slider slider slider" 2.6em [main-right] 
-            [footer-left] "note note remove remove clone" 2.6em [footer-right] 
+            [header-left] "title title title lock save" 3em [header-right]
+            [main-left] "percent slider slider slider slider" 3em [main-right] 
+            [footer-left] "note note remove remove clone" 3em [footer-right] 
             / 8.8em 1fr 2em 2.1em 3em;
     }
     
     .task-container.locked-task {
         grid-template:
-            [header-left] "title title percent-locked lock save" 2.6em [header-right]
+            [header-left] "title title percent-locked lock save" 3em [header-right]
             / 2.4em 1fr 2.8em 2.1em 3em;
     }
 
@@ -462,11 +462,4 @@ Hide the template
     .task-copy-json {
         display: none;
     }
-
-    /* .task-element {
-        padding: 0 .2em 0 0.4em;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    } */
 }
