@@ -80,11 +80,18 @@ input[type=number] {
     background-color: white;
     border-radius: .3em;
     overflow: hidden;
-    min-width: 380px;
+    min-width: 260px;
     max-width: 600px;
-    margin: 2.4em auto;
+    margin: 2.2em auto;
 
     transition: box-shadow 1s;
+}
+
+@media screen and (max-width: 600px) {
+    .tasks-nav,
+    .task-container {
+        margin: 2em .6em;
+    }
 }
 
 .tasks-nav:hover,
@@ -96,7 +103,7 @@ input[type=number] {
 
 /* Navigator grid */
 .tasks-nav {
-    margin-top: 2em;
+    /* margin-top: 2em; */
     grid-template:
         [header-left] "label save-all reload new new" 3em [header-right]
         /* [main-left] "percent slider slider slider slider slider" 3em [main-right]  */
@@ -406,4 +413,60 @@ Hide the template
     position: relative;
     top: -.25em;
     right: -.15em;
+}
+
+
+@media screen and (max-width: 380px) {
+    .task-container {
+        grid-template:
+            [header-left] "title title title lock copy save" 2.6em [header-right]
+            [main-left] "percent slider slider slider slider slider" 2.6em [main-right] 
+            [footer-left] "note note note remove remove clone" 2.6em [footer-right] 
+            / 8.4em 1fr 3em 2.1em 2.1em 3.2em;
+    }
+    
+    .task-container.locked-task {
+        grid-template:
+            [header-left] "title title percent-locked lock copy save" 2.6em [header-right]
+            / 8.4em 1fr 3em 2.1em 2.1em 3.2em;
+    }
+
+    .task-element {
+        padding: 0 .2em 0 0.4em;
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .tasks-nav {
+        grid-template:
+            [header-left] "label reload new new" 3em [header-right]
+            / 1fr 2.6em 2.4em 2.4em;
+    }
+
+    .task-container {
+        grid-template:
+            [header-left] "title title title lock save" 2.6em [header-right]
+            [main-left] "percent slider slider slider slider" 2.6em [main-right] 
+            [footer-left] "note note remove remove clone" 2.6em [footer-right] 
+            / 8.8em 1fr 2em 2.1em 3em;
+    }
+    
+    .task-container.locked-task {
+        grid-template:
+            [header-left] "title title percent-locked lock save" 2.6em [header-right]
+            / 2.4em 1fr 2.8em 2.1em 3em;
+    }
+
+    .tasks-nav-save-all,
+    .task-copy-json {
+        display: none;
+    }
+
+    /* .task-element {
+        padding: 0 .2em 0 0.4em;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    } */
 }
