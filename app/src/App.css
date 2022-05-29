@@ -72,13 +72,13 @@ input[type=number] {
 .tasks-nav,
 .task-container {
     display: grid;
-    grid-gap: .4em;
+    grid-gap: .3em;
 
     padding: 0;
     border: 0 solid white;
-    outline: .4em solid white;
+    outline: .3em solid white;
     background-color: white;
-    border-radius: .6em;
+    border-radius: .3em;
     overflow: hidden;
     min-width: 380px;
     max-width: 600px;
@@ -91,7 +91,6 @@ input[type=number] {
 .task-container:hover {
     box-shadow: 0px 0 12px 3px #558dd1;
     transition: box-shadow .6s;
-    border-radius: .6em;
 }
 
 
@@ -151,15 +150,15 @@ input[type=number] {
 /* Task Grid */
 .task-container {
     grid-template:
-        [header-left] "title title title lock copy save" 3em [header-right]
-        [main-left] "percent slider slider slider slider slider" 3em [main-right] 
-        [footer-left] "note note note remove remove clone" 3em [footer-right] 
+        [header-left] "title title title lock copy save" 2.6em [header-right]
+        [main-left] "percent slider slider slider slider slider" 2.6em [main-right] 
+        [footer-left] "note note note remove remove clone" 2.6em [footer-right] 
         / 10.4em 1fr 3em 2.1em 2.1em 5em;
 }
 
 .task-container.locked-task {
     grid-template:
-        [header-left] "title title percent-locked lock copy save" 3em [header-right]
+        [header-left] "title title percent-locked lock copy save" 2.6em [header-right]
         / 10.4em 1fr 3em 2.1em 2.1em 5em;
 }
 
