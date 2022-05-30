@@ -2,7 +2,7 @@
   "tasks": [
     {
       "title": "Learn HTML",
-      "progress": "68",
+      "progress": "85",
       "note": "Hypertext markup language",
       "completed": false,
       "id": 1
@@ -16,22 +16,22 @@
     },
     {
       "title": "Learn JavaScript",
-      "progress": "61",
+      "progress": "78",
       "note": "A programming language for web applications",
       "completed": false,
       "id": 3
     },
     {
       "title": "Learn React",
-      "progress": "16",
+      "progress": "13",
       "note": "It's not complicated",
       "completed": false,
       "id": 4
     },
     {
-      "title": "Test:1",
+      "title": "Learn Markdown / Markup",
       "progress": "100",
-      "note": "",
+      "note": "Markdown is documentation languages used by GitHub and many others. Markup is used my MediaWiki.",
       "completed": true,
       "id": 5
     }
