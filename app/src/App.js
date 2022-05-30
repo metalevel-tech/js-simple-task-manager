@@ -17,22 +17,22 @@ class App extends React.Component {
             statistics: {
                 total: 0,
                 completed: 0,
-                uncompleted: 0,
                 new: 0,
-                unsaved: 0
+                unsaved: 0,
+                unlocked: false
             },
         };
     }
 
     buildStatistics() {
         const statistics = {...this.state.statistics};
+        
         statistics.total = this.state.tasks.length;
         statistics.completed = this.state.tasks.filter(task => task.data.completed).length;
-        statistics.uncompleted = statistics.total - statistics.completed;
         statistics.new = this.state.tasks.filter(task => task.controls.isNewTask).length;
         statistics.unsaved = this.state.tasks.filter(task => task.controls.toSave).length;
+        statistics.unlocked = this.state.tasks.filter(task => !task.controls.isLocked).length > 0;
 
-        // return statistics;
         this.setState({ statistics });
     }
 
@@ -132,6 +132,18 @@ class App extends React.Component {
             this.handleTaskSave(task.data, task.controls);
         });
     }
+    
+    handleLockUnlockAllTasks = (event) => {
+        const tasks = [...this.state.tasks];
+
+        if (this.state.statistics.unlocked) {
+            tasks.forEach(task => { task.controls.isLocked = true; });
+        } else {
+            tasks.forEach(task => { task.controls.isLocked = false; });
+        }
+
+        this.setState({ tasks }, this.buildStatistics);
+    }
 
     renderTask(task) {
         return (
@@ -146,7 +158,7 @@ class App extends React.Component {
             />
         );
     }
-
+    
     render() {
         return (
             <div className="App">
@@ -155,6 +167,7 @@ class App extends React.Component {
                     onAddNewTask={this.handleAddNewTask}
                     onReloadTaskList={this.handleLoadTaskListDB}
                     onSaveAllTasks={this.handleSaveAllTasks}
+                    onLockUnlockAll={this.handleLockUnlockAllTasks}
                     statistics={this.state.statistics}
                 />
 
