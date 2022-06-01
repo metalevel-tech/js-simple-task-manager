@@ -25,8 +25,8 @@ class App extends React.Component {
     }
 
     buildStatistics() {
-        const statistics = {...this.state.statistics};
-        
+        const statistics = { ...this.state.statistics };
+
         statistics.total = this.state.tasks.length;
         statistics.completed = this.state.tasks.filter(task => task.data.completed).length;
         statistics.new = this.state.tasks.filter(task => task.controls.isNewTask).length;
@@ -59,7 +59,7 @@ class App extends React.Component {
             tasks[taskIndex] = updatedTask;
 
             // const statistics = this.buildStatistics();
-        
+
             this.setState({ tasks }, this.buildStatistics);
         }
     }
@@ -72,7 +72,7 @@ class App extends React.Component {
         const removedTask = tasks.splice(taskIndex, 1)[0];
 
         // const statistics = this.buildStatistics();
-        
+
         // Deal with the situation when the removed object is not saved to the DataBase.
         if (controls.isNewTask) {
             this.setState({ tasks }, this.buildStatistics);
@@ -98,7 +98,7 @@ class App extends React.Component {
             completed: false
         };
         newTaskData.id = newTaskId(tasks);
-        
+
         const newTask = new Task(newTaskData);
 
         // If it is a new task, add it to the beginning,
@@ -112,16 +112,16 @@ class App extends React.Component {
         }
 
         // const statistics = this.buildStatistics();
-        
+
         this.setState({ tasks }, this.buildStatistics);
     };
 
     handleLoadTaskListDB = async (event) => {
         let tasks = [];
         tasks = await getTasksListDB(tasks);
-        
+
         // const statistics = this.buildStatistics();
-        
+
         this.setState({ tasks }, this.buildStatistics);
     }
 
@@ -132,7 +132,7 @@ class App extends React.Component {
             this.handleTaskSave(task.data, task.controls);
         });
     }
-    
+
     handleLockUnlockAllTasks = (event) => {
         const tasks = [...this.state.tasks];
 
@@ -158,7 +158,7 @@ class App extends React.Component {
             />
         );
     }
-    
+
     render() {
         return (
             <div className="App">

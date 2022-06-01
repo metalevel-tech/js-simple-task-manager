@@ -1,8 +1,18 @@
+import { useRef, useEffect } from 'react';
 import { getTaskDB } from '../Helpers/FetchFunctions';
 
 function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
     const { id, title, progress, note, completed } = data;
     const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = controls;
+
+    const refTitleField = useRef(null);
+
+    useEffect(() => {
+        if (isNewTask) {
+            refTitleField.current.focus();
+        }
+    }, [isNewTask]);
+
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
@@ -88,6 +98,7 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
                     value={title}
                     onChange={(e) => handleDataChange(e, "title")} 
                     readOnly={isLocked}
+                    ref={refTitleField}
                 />
             </div>
 
