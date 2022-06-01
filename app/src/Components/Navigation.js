@@ -1,4 +1,13 @@
+// import { useEffect, useRef } from "react";
+
 function NavComponent(props) {
+    // const refReloadButton = useRef();
+    // useEffect(() => {
+    //     if (props.statistics.total === 0) {
+    //         refReloadButton.current.click();
+    //     }
+    // }, [props.statistics.total]);
+
     return (
         <div className="tasks-nav">
             <div className="tasks-nav-label task-element w3-theme-d1">
@@ -15,6 +24,7 @@ function NavComponent(props) {
                 role="button"
                 title="Reload data. Unsaved changes will be lost."
                 onClick={props.onReloadTaskList}
+                // ref={refReloadButton}
             >{/* Reload all */}</div>
 
             <div className="tasks-nav-add-new task-btn w3-theme-d2 w3-hover-theme"

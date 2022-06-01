@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { NavComponent } from './Components/Navigation';
 import { TaskComponent } from './Components/Task';
@@ -8,84 +9,67 @@ import {
 } from './Helpers/FetchFunctions';
 
 // The main class of the application.
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+function App(props) {
+    const [tasks, setTasks] = useState([]);
+    const [stat, setStat] = useState({
+        total: 0,
+        completed: 0,
+        new: 0,
+        unsaved: 0,
+        unlocked: false
+    });
 
-        this.state = {
-            tasks: [],
-            statistics: {
-                total: 0,
-                completed: 0,
-                new: 0,
-                unsaved: 0,
-                unlocked: false
-            },
-        };
+    const setStatistics = (data = tasks) => {
+        setStat({
+            total: data.length,
+            completed: data.filter(task => task.data.completed).length,
+            new: data.filter(task => task.controls.isNewTask).length,
+            unsaved: data.filter(task => task.controls.toSave).length,
+            unlocked: data.filter(task => !task.controls.isLocked).length > 0
+        });
     }
 
-    buildStatistics() {
-        const statistics = { ...this.state.statistics };
-
-        statistics.total = this.state.tasks.length;
-        statistics.completed = this.state.tasks.filter(task => task.data.completed).length;
-        statistics.new = this.state.tasks.filter(task => task.controls.isNewTask).length;
-        statistics.unsaved = this.state.tasks.filter(task => task.controls.toSave).length;
-        statistics.unlocked = this.state.tasks.filter(task => !task.controls.isLocked).length > 0;
-
-        this.setState({ statistics });
-    }
-
-    handleTaskChange = (data, controls) => {
-        const tasks = [...this.state.tasks];
-        const taskIndex = tasks.findIndex(task => task.data.id === data.id);
-        tasks[taskIndex] = { data, controls };
-
-        // const statistics = this.buildStatistics();
-
-        this.setState({ tasks }, this.buildStatistics);
-    }
-
-    handleTaskSave = async (data, controls) => {
+    const handleTaskSave = async (data, controls) => {
         if (controls.toSave) {
-            const tasks = [...this.state.tasks];
             const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
             // Invalidate the marker for the task to be saved.
             controls.toRemove = false;
-
             const updatedTask = await saveTaskDB({ data, controls });
-
             tasks[taskIndex] = updatedTask;
 
-            // const statistics = this.buildStatistics();
-
-            this.setState({ tasks }, this.buildStatistics);
+            setTasks(tasks);
+            setStatistics(tasks);
         }
     }
 
-    handleTaskRemove = async (data, controls) => {
-        const tasks = [...this.state.tasks];
+    const handleTaskRemove = async (data, controls) => {
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
         // array.splice() returns an array of the removed items
         const removedTask = tasks.splice(taskIndex, 1)[0];
 
-        // const statistics = this.buildStatistics();
-
         // Deal with the situation when the removed object is not saved to the DataBase.
         if (controls.isNewTask) {
-            this.setState({ tasks }, this.buildStatistics);
+            setTasks(tasks);
+            setStatistics(tasks);
         } else {
             await removeTaskDB(removedTask).then(() => {
-                this.setState({ tasks }, this.buildStatistics);
+                setTasks(tasks);
+                setStatistics(tasks);
             });
         }
     }
 
-    handleAddNewTask = (data) => {
-        const tasks = [...this.state.tasks];
+    const handleTaskChange = (data, controls) => {
+        const taskIndex = tasks.findIndex(task => task.data.id === data.id);
+        tasks[taskIndex] = { data, controls };
 
+        setTasks(tasks);
+        setStatistics(tasks);
+    }
+
+    const handleAddNewTask = (data) => {
         // When the 'data' is not provided it is a new task creation,
         // otherwise it is a clone of an existing task.
         // We must create a deep copy of the data, to avoid changing the original,
@@ -111,79 +95,68 @@ class App extends React.Component {
             tasks.unshift(newTask);
         }
 
-        // const statistics = this.buildStatistics();
-
-        this.setState({ tasks }, this.buildStatistics);
+        setTasks(tasks);
+        setStatistics(tasks);
     };
 
-    handleLoadTaskListDB = async (event) => {
-        let tasks = [];
-        tasks = await getTasksListDB(tasks);
-
-        // const statistics = this.buildStatistics();
-
-        this.setState({ tasks }, this.buildStatistics);
-    }
-
-    handleSaveAllTasks = (event) => {
-        const tasks = [...this.state.tasks];
-
+    const handleSaveAllTasks = (event) => {
         tasks.forEach(task => {
-            this.handleTaskSave(task.data, task.controls);
+            handleTaskSave(task.data, task.controls);
         });
+        setStatistics(tasks);
     }
 
-    handleLockUnlockAllTasks = (event) => {
-        const tasks = [...this.state.tasks];
-
-        if (this.state.statistics.unlocked) {
+    const handleLockUnlockAllTasks = (event) => {
+        if (stat.unlocked) {
             tasks.forEach(task => { task.controls.isLocked = true; });
         } else {
             tasks.forEach(task => { task.controls.isLocked = false; });
         }
 
-        this.setState({ tasks }, this.buildStatistics);
+        setTasks(tasks);
+        setStatistics(tasks);
     }
 
-    renderTask(task) {
+    const handleLoadTaskListDB = async (event) => {
+        const data = await getTasksListDB([]);
+        setTasks(data);
+        setStatistics(data);
+    }
+
+    useEffect(() => {
+        handleLoadTaskListDB();
+    }, []);
+
+    function renderTask(task) {
         return (
             <TaskComponent
                 key={`task-${task.data.id}`}
                 data={task.data}
                 controls={task.controls}
-                onTaskChange={this.handleTaskChange}
-                onTaskClone={this.handleAddNewTask}
-                onTaskRemove={this.handleTaskRemove}
-                onTaskSave={this.handleTaskSave}
+                onTaskChange={handleTaskChange}
+                onTaskClone={handleAddNewTask}
+                onTaskRemove={handleTaskRemove}
+                onTaskSave={handleTaskSave}
             />
         );
     }
 
-    render() {
-        return (
-            <div className="App">
-                <NavComponent
-                    key="nav"
-                    onAddNewTask={this.handleAddNewTask}
-                    onReloadTaskList={this.handleLoadTaskListDB}
-                    onSaveAllTasks={this.handleSaveAllTasks}
-                    onLockUnlockAll={this.handleLockUnlockAllTasks}
-                    statistics={this.state.statistics}
-                />
+    return (
+        <div className="App">
+            <NavComponent
+                key="nav"
+                onAddNewTask={handleAddNewTask}
+                onReloadTaskList={handleLoadTaskListDB}
+                onSaveAllTasks={handleSaveAllTasks}
+                onLockUnlockAll={handleLockUnlockAllTasks}
+                statistics={stat}
+            />
 
-                <div id="tasks">
-                    {this.state.tasks.map(task => this.renderTask(task))}
-                </div>
+            <div id="tasks">
+                {tasks.map(task => renderTask(task))}
             </div>
-        );
-    }
-
-    async componentDidMount() {
-        this.handleLoadTaskListDB();
-        // let tasks = [...this.state.tasks];
-        // tasks = await getTasksListDB(tasks);
-        // this.setState({ tasks });
-    }
+        </div>
+    );
 }
 
 export default App;
