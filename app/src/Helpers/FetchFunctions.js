@@ -109,7 +109,14 @@ async function saveSingleTaskToDataBase(task) {
             throw new Error(`Network response was not ok: ${response.status}`);
         })
         .then(data => {
+            // This is temporal value to display, because we don't send the task 
+            // back to the server, but we update the task in the state.
+            // Normally we want the user to see the the placeholder message
+            // and enter its own title. Probably we should dismiss tasks without title.
+            data.title = data.title ? data.title : `id: ${data.id}`;
+
             updatedTask.data = data;
+            updatedTask.state.toRemove = false;
             updatedTask.state.toSave = false;
             updatedTask.state.isNewTask = false;
 

@@ -35,15 +35,15 @@ function App(props) {
     const handleTaskSave = async ({ data, state }) => {
         if (state.toSave) {
             const taskIndex = tasks.findIndex(task => task.data.id === data.id);
-
-            // Invalidate the marker for the task to be saved.
-            state.toRemove = false;
             const updatedTask = await saveTaskDB({ data, state });
             tasks[taskIndex] = updatedTask;
-
             setTasks(tasks);
             setStatistic(tasks);
         }
+    }
+
+    const handleSaveAllTasks = async (event) => {
+        for (const task of tasks) await handleTaskSave(task);
     }
 
     const handleTaskRemove = async ({ data, state }) => {
@@ -102,13 +102,6 @@ function App(props) {
         setStatistic(tasks);
     };
 
-    const handleSaveAllTasks = (event) => {
-        tasks.forEach(task => {
-            handleTaskSave(task);
-        });
-        setStatistic(tasks);
-    }
-
     const handleLockUnlockAllTasks = (event) => {
         if (statistic.unlocked) {
             tasks.forEach(task => { task.state.isLocked = true; });
@@ -149,11 +142,25 @@ function App(props) {
                 handleAddNewTask
             }}>
                 {tasks.map(task => <TaskComponent
-                        key={`task-${task.data.id}`}
-                        data={task.data}
-                        state={task.state}
-                    />)}
+                    key={`task-${task.data.id}`}
+                    data={task.data}
+                    state={task.state}
+                />)}
             </TaskContext.Provider>
+            
+            {/* {tasks.map(task =>
+                <TaskContext.Provider value={{
+                    task,
+                    handleTaskChange,
+                    handleTaskRemove,
+                    handleTaskSave,
+                    handleAddNewTask
+                }} key={`task-${task.data.id}-context`}>
+                    <TaskComponent key={`task-${task.data.id}`} />
+                </TaskContext.Provider>
+            )} */}
+
+
         </React.Fragment>
     );
 }

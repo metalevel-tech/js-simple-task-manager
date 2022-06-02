@@ -4,14 +4,16 @@ import { TaskContext } from "../App";
 import { getTaskDB } from '../Helpers/FetchFunctions';
 
 // function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
-function TaskComponent({ data, state}) {
+function TaskComponent(/*props*/{ data, state }) {
     const {
+        // task,
         handleTaskChange,
         handleTaskRemove,
         handleTaskSave,
         handleAddNewTask
     } = useContext(TaskContext);
 
+    // const { data, state } = task;
     const { id, title, progress, note, completed } = data;
     const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = state;
 
@@ -30,7 +32,7 @@ function TaskComponent({ data, state}) {
         if (state.progress < 100) data.completed = false;
         state.toSave = true;
 
-        handleTaskChange({data, state});
+        handleTaskChange({ data, state });
     };
 
     const handleSave = (event) => {
@@ -38,57 +40,57 @@ function TaskComponent({ data, state}) {
             if (state.progress >= 100) data.completed = true;
             else data.completed = false;
 
-            handleTaskSave({data, state});
+            handleTaskSave({ data, state });
         }
     };
 
     const handleClone = (event) => {
         state.isLocked = true;
-        handleTaskChange({data, state});
+        handleTaskChange({ data, state });
         handleAddNewTask(data); // On Task Clone
     };
 
     const handleToRemove = (event) => {
         if (toRemove) state.toRemove = false;
         else state.toRemove = true;
-        handleTaskChange({data, state});
+        handleTaskChange({ data, state });
     };
 
     const handleRemove = (event) => {
-        handleTaskRemove({data, state});
+        handleTaskRemove({ data, state });
     };
 
     const handleTaskDataFromDataBaseToClipboard = async (event) => {
         // Reject the operation when the task is not saved
         if (toSave || isNewTask) {
             state.copyWarning = true;
-            handleTaskChange({data, state});
+            handleTaskChange({ data, state });
 
             setTimeout(() => {
                 state.copyWarning = false;
-                handleTaskChange({data, state});
+                handleTaskChange({ data, state });
             }, 1500);
             return;
         }
 
-        let freshTaskData = await getTaskDB({data, state});
+        let freshTaskData = await getTaskDB({ data, state });
         freshTaskData = JSON.stringify(freshTaskData, null, 4);
-        
+
         navigator.clipboard.writeText(freshTaskData)
             .then(() => {
                 state.copySuccess = true;
-                handleTaskChange({data, state});
+                handleTaskChange({ data, state });
 
                 setTimeout(() => {
                     state.copySuccess = false;
-                    handleTaskChange({data, state});
+                    handleTaskChange({ data, state });
                 }, 1500);
             });
     };
 
     const handleTaskLock = (event) => {
         state.isLocked = !isLocked;
-        handleTaskChange({data, state});
+        handleTaskChange({ data, state });
     };
 
     return (
@@ -109,7 +111,7 @@ function TaskComponent({ data, state}) {
                 <input className="input-task-title" id={"task-title-" + id}
                     type="text" name="title" placeholder="Enter task title"
                     value={title}
-                    onChange={(e) => handleDataChange(e, "title")} 
+                    onChange={(e) => handleDataChange(e, "title")}
                     readOnly={isLocked}
                     ref={refTitleField}
                 />
@@ -161,9 +163,9 @@ function TaskComponent({ data, state}) {
             >{/* Lock/Unlock or Minimize/Maximize */}</div>
 
             <div className={"task-copy-json task-btn w3-theme w3-hover-theme" +
-                            (copyWarning ? " task-copy-rejected" : "") + 
-                            (copySuccess ? " task-copied" : "")
-                           }
+                (copyWarning ? " task-copy-rejected" : "") +
+                (copySuccess ? " task-copied" : "")
+            }
                 role="button"
                 onClick={handleTaskDataFromDataBaseToClipboard}
             >{/* Copy JSON */}</div>
