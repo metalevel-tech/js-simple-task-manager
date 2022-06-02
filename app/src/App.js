@@ -104,7 +104,7 @@ function App(props) {
 
     const handleSaveAllTasks = (event) => {
         tasks.forEach(task => {
-            handleTaskSave(task.data, task.state);
+            handleTaskSave(task);
         });
         setStatistic(tasks);
     }
@@ -148,13 +148,11 @@ function App(props) {
                 handleTaskSave,
                 handleAddNewTask
             }}>
-                {tasks.map(task => 
-                <TaskComponent
-                    key={`task-${task.data.id}`}
-                    data={task.data}
-                    state={task.state}
-                />
-                )}
+                {tasks.map(task => <TaskComponent
+                        key={`task-${task.data.id}`}
+                        data={task.data}
+                        state={task.state}
+                    />)}
             </TaskContext.Provider>
         </React.Fragment>
     );
