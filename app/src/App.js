@@ -135,7 +135,7 @@ function App(props) {
                 <NavComponent key="nav" />
             </NavContext.Provider>
 
-            <TaskContext.Provider key="task-context" value={{
+            {/* <TaskContext.Provider key="task-context" value={{
                 handleTaskChange,
                 handleTaskRemove,
                 handleTaskSave,
@@ -146,9 +146,9 @@ function App(props) {
                     data={task.data}
                     state={task.state}
                 />)}
-            </TaskContext.Provider>
+            </TaskContext.Provider> */}
             
-            {/* {tasks.map(task =>
+            {tasks.map(task =>
                 <TaskContext.Provider value={{
                     task,
                     handleTaskChange,
@@ -158,7 +158,7 @@ function App(props) {
                 }} key={`task-${task.data.id}-context`}>
                     <TaskComponent key={`task-${task.data.id}`} />
                 </TaskContext.Provider>
-            )} */}
+            )}
 
 
         </React.Fragment>
