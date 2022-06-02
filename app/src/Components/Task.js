@@ -4,16 +4,14 @@ import { TaskContext } from "../App";
 import { getTaskDB } from '../Helpers/FetchFunctions';
 
 // function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
-function TaskComponent(props/*{ data, state }*/) {
+function TaskComponent({ data, state }) {
     const {
-        task,
         handleTaskChange,
         handleTaskRemove,
         handleTaskSave,
         handleAddNewTask
     } = useContext(TaskContext);
 
-    const { data, state } = task;
     const { id, title, progress, note, completed } = data;
     const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = state;
 
@@ -24,7 +22,6 @@ function TaskComponent(props/*{ data, state }*/) {
             refTitleField.current.focus();
         }
     }, [isNewTask]);
-
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
