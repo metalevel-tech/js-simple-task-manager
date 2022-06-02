@@ -1,12 +1,14 @@
-// import { useEffect, useRef } from "react";
+import { useContext } from "react";
+import { NavContext } from "../App";
 
 function NavComponent(props) {
-    // const refReloadButton = useRef();
-    // useEffect(() => {
-    //     if (props.statistics.total === 0) {
-    //         refReloadButton.current.click();
-    //     }
-    // }, [props.statistics.total]);
+    const {
+        statistic,
+        handleAddNewTask,
+        handleLoadTaskListDB,
+        handleSaveAllTasks,
+        handleLockUnlockAllTasks
+    } = useContext(NavContext);
 
     return (
         <div className="tasks-nav">
@@ -17,28 +19,28 @@ function NavComponent(props) {
             <div className="tasks-nav-save-all task-btn w3-theme-d2 w3-hover-theme"
                 role="button"
                 title="Save all tasks to the database."
-                onClick={props.onSaveAllTasks}
+                onClick={handleSaveAllTasks}
             >{/* Reload all */}</div>
 
             <div className="tasks-nav-reload task-btn w3-theme-d2 w3-hover-theme"
                 role="button"
                 title="Reload data. Unsaved changes will be lost."
-                onClick={props.onReloadTaskList}
-                // ref={refReloadButton}
+                onClick={handleLoadTaskListDB}
+            // ref={refReloadButton}
             >{/* Reload all */}</div>
 
             <div className="tasks-nav-add-new task-btn w3-theme-d2 w3-hover-theme"
                 role="button"
                 title="Add new task."
-                onClick={(event) => props.onAddNewTask(null)} // Otherwise {props.onAddNewTask} will pass 'event' as an argument
+                onClick={(event) => handleAddNewTask(null)} // Otherwise {handleAddNewTask} will pass 'event' as an argument
             >{/* Add task */}</div>
-            
+
             <div className={"tasks-nav-lock-all task-btn w3-theme-d2 w3-hover-theme" +
-                            (props.statistics.unlocked ? " tasks-nav-lock-all-unlocked" : " tasks-nav-lock-all-locked")}
+                (statistic.unlocked ? " tasks-nav-lock-all-unlocked" : " tasks-nav-lock-all-locked")}
                 role="button"
                 title="Lock or unlock all tasks."
-                onClick={props.onLockUnlockAll}
-                // onClick={} 
+                onClick={handleLockUnlockAllTasks}
+            // onClick={} 
             >{/* Lock All Tasks */}</div>
 
             {/* Second row */}
@@ -49,28 +51,28 @@ function NavComponent(props) {
             <div className="task-nav-total-tasks nav-label w3-theme-d1">
                 <div className="task-nav-paragraph-container">
                     <p>Tasks</p>
-                    <p><b>{props.statistics.total}</b></p>
+                    <p><b>{statistic.total}</b></p>
                 </div>
             </div>
 
             <div className="task-nav-completed-tasks nav-label w3-theme-d1">
                 <div className="task-nav-paragraph-container">
                     <p>Completed</p>
-                    <p><b>{props.statistics.completed}</b></p>
+                    <p><b>{statistic.completed}</b></p>
                 </div>
             </div>
-            
+
             <div className="task-nav-new-tasks nav-label w3-theme-d1">
                 <div className="task-nav-paragraph-container">
                     <p>New</p>
-                    <p><b>{props.statistics.new}</b></p>
+                    <p><b>{statistic.new}</b></p>
                 </div>
             </div>
-           
+
             <div className="task-nav-unsaved-tasks nav-label w3-theme-d1">
                 <div className="task-nav-paragraph-container">
                     <p>Unsaved</p>
-                    <p><b>{props.statistics.unsaved}</b></p>
+                    <p><b>{statistic.unsaved}</b></p>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ class Task {
         completed: false
     };
     // Stores specific data for the 'state' of the TaskComponent instances.
-    controls = {
+    state = {
         toSave: true,      // the task is not saved to the data base
         toRemove: false,    // mark the task for deletion
         isNewTask: true,    // the task is new

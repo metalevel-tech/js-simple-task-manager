@@ -56,9 +56,9 @@ async function getTasksListFromDataBase(tasks) {
             data.forEach(taskData => {
                 const task = new Task(taskData);
 
-                task.controls.isNewTask = false;
-                task.controls.isLocked = true;
-                task.controls.toSave = false;
+                task.state.isNewTask = false;
+                task.state.isLocked = true;
+                task.state.toSave = false;
 
                 tasks.push(task);
             });
@@ -91,7 +91,7 @@ async function saveSingleTaskToDataBase(task) {
         init: { headers: { "Content-Type": "application/json" } }
     };
 
-    if (task.controls.isNewTask) {
+    if (task.state.isNewTask) {
         delete task.data.id; // Let the DataBase generate the Id.
         request.init.method = "POST";
         request.init.body = JSON.stringify(task.data);
@@ -110,8 +110,8 @@ async function saveSingleTaskToDataBase(task) {
         })
         .then(data => {
             updatedTask.data = data;
-            updatedTask.controls.toSave = false;
-            updatedTask.controls.isNewTask = false;
+            updatedTask.state.toSave = false;
+            updatedTask.state.isNewTask = false;
 
             return updatedTask;
         })

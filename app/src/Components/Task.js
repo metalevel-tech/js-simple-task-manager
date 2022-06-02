@@ -1,9 +1,19 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from 'react';
+import { TaskContext } from "../App";
+
 import { getTaskDB } from '../Helpers/FetchFunctions';
 
-function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
+// function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
+function TaskComponent({ data, state}) {
+    const {
+        handleTaskChange,
+        handleTaskRemove,
+        handleTaskSave,
+        handleAddNewTask
+    } = useContext(TaskContext);
+
     const { id, title, progress, note, completed } = data;
-    const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = controls;
+    const { toSave, toRemove, isNewTask, isLocked, copyWarning, copySuccess } = state;
 
     const refTitleField = useRef(null);
 
@@ -16,66 +26,69 @@ function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove
 
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
-        if (data.progress < 100) data.completed = false;
-        controls.toSave = true;
-        onTaskChange(data, controls);
+
+        if (state.progress < 100) data.completed = false;
+        state.toSave = true;
+
+        handleTaskChange({data, state});
     };
 
     const handleSave = (event) => {
         if (toSave) {
-            if (data.progress >= 100) data.completed = true;
+            if (state.progress >= 100) data.completed = true;
             else data.completed = false;
-            onTaskSave(data, controls);
+
+            handleTaskSave({data, state});
         }
     };
 
     const handleClone = (event) => {
-        controls.isLocked = true;
-        onTaskChange(data, controls);
-        onTaskClone(data);
+        state.isLocked = true;
+        handleTaskChange({data, state});
+        handleAddNewTask(data); // On Task Clone
     };
 
     const handleToRemove = (event) => {
-        if (toRemove) controls.toRemove = false;
-        else controls.toRemove = true;
-        onTaskChange(data, controls);
+        if (toRemove) state.toRemove = false;
+        else state.toRemove = true;
+        handleTaskChange({data, state});
     };
 
     const handleRemove = (event) => {
-        onTaskRemove(data, controls);
+        handleTaskRemove({data, state});
     };
 
     const handleTaskDataFromDataBaseToClipboard = async (event) => {
         // Reject the operation when the task is not saved
         if (toSave || isNewTask) {
-            controls.copyWarning = true;
-            onTaskChange(data, controls);
+            state.copyWarning = true;
+            handleTaskChange({data, state});
 
             setTimeout(() => {
-                controls.copyWarning = false;
-                onTaskChange(data, controls);
+                state.copyWarning = false;
+                handleTaskChange({data, state});
             }, 1500);
             return;
         }
 
-        let freshTaskData = await getTaskDB({ data, controls });
+        let freshTaskData = await getTaskDB({data, state});
         freshTaskData = JSON.stringify(freshTaskData, null, 4);
         
         navigator.clipboard.writeText(freshTaskData)
             .then(() => {
-                controls.copySuccess = true;
-                onTaskChange(data, controls);
+                state.copySuccess = true;
+                handleTaskChange({data, state});
 
                 setTimeout(() => {
-                    controls.copySuccess = false;
-                    onTaskChange(data, controls);
+                    state.copySuccess = false;
+                    handleTaskChange({data, state});
                 }, 1500);
             });
     };
 
     const handleTaskLock = (event) => {
-        controls.isLocked = !isLocked;
-        onTaskChange(data, controls);
+        state.isLocked = !isLocked;
+        handleTaskChange({data, state});
     };
 
     return (
