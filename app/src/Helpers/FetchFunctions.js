@@ -137,10 +137,6 @@ async function getSingleTaskFromDataBase(task) {
             if (response.ok) return response.json();
             throw new Error(`Network response was not ok: ${response.status}`);
         })
-        .then(data => {
-            const taskData = data;
-            return taskData;
-        })
         .catch(error => { console.log(`Trouble at task get: ${error}`); });
 }
 

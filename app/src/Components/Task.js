@@ -74,6 +74,7 @@ function TaskComponent(props) {
         let freshTaskData = await getTaskDB({ data, state });
         freshTaskData = JSON.stringify(freshTaskData, null, 4);
 
+        // https://stackoverflow.com/a/51823007/6543935
         navigator.clipboard.writeText(freshTaskData)
             .then(() => {
                 state.copySuccess = true;
@@ -89,6 +90,8 @@ function TaskComponent(props) {
     const handleTaskLock = (event) => {
         state.isLocked = !isLocked;
         handleTaskChange({ data, state });
+
+        if (!state.isLocked) refTitleField.current.focus();
     };
 
     return (
@@ -110,6 +113,7 @@ function TaskComponent(props) {
                     type="text" name="title" placeholder="Enter task title"
                     value={title}
                     onChange={(e) => handleDataChange(e, "title")}
+                    onDoubleClick={handleTaskLock}
                     readOnly={isLocked}
                     ref={refTitleField}
                 />

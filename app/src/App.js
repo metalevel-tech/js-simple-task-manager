@@ -136,6 +136,10 @@ function App(props) {
             )}
         </React.Fragment>
     );
+    // We can pass just 'statistic', 'task' and 'setState()',
+    // to the children, and create the handler functions there.
+    // Even the use 'useEffect()' hook can be used inside
+    // the NavComponent....
 }
 
 export { App as default, NavContext, TaskContext };
