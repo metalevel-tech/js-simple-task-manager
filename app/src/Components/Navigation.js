@@ -5,9 +5,9 @@ function NavComponent(props) {
     const {
         statistic,
         handleAddNewTask,
-        handleLoadTaskListDB,
         handleSaveAllTasks,
-        handleLockUnlockAllTasks
+        handleLockUnlockAllTasks,
+        handleLoadTaskListDB
     } = useContext(NavContext);
 
     return (

@@ -1,6 +1,5 @@
 import { useRef, useEffect, useContext } from 'react';
 import { TaskContext } from "../App";
-
 import { getTaskDB } from '../Helpers/FetchFunctions';
 
 // function TaskComponent({ data, controls, onTaskChange, onTaskClone, onTaskRemove, onTaskSave }) {
@@ -28,7 +27,7 @@ function TaskComponent(props) {
     const handleDataChange = (event, property) => {
         data[property] = event.target.value;
 
-        if (state.progress < 100) data.completed = false;
+        if (data.progress < 100) data.completed = false;
         state.toSave = true;
 
         handleTaskChange({ data, state });
@@ -36,7 +35,7 @@ function TaskComponent(props) {
 
     const handleSave = (event) => {
         if (toSave) {
-            if (state.progress >= 100) data.completed = true;
+            if (data.progress >= 100) data.completed = true;
             else data.completed = false;
 
             handleTaskSave({ data, state });

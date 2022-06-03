@@ -41,7 +41,7 @@ function generateNewTaskId(tasks) {
 // };
 
 // GET all tasks from DataBase
-async function getTasksListFromDataBase(tasks) {
+async function getTasksListFromDataBase(tasks = []) {
     const request = {
         url: `${dataBase.fqdn}`,
         init: { method: "GET" }

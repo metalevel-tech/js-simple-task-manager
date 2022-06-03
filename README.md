@@ -66,3 +66,7 @@ The application [json-server](https://github.com/typicode/json-server) is used a
 |POST   |/tasks     |add new Todo       |
 |PUT    |/tasks/id  |update Todo by id  |
 |DELETE |/tasks/id  |remove Todo by id  |
+
+### Questions
+
+* [Which is better](https://github.com/metalevel-tech/js-simple-task-manager/commit/55215199ae24c3d5d5526438469c0c6ebefe51ed#diff-6ea1aaf1b9c53ddae6d7edf1fa3ff1e34adb5a392fd2fa79e17d92b292e49c18)

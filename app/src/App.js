@@ -14,7 +14,7 @@ const TaskContext = createContext();
 // The main class of the application.
 function App(props) {
     const [tasks, setTasks] = useState([]);
-    const [statistic, setStat] = useState({
+    const [statistic, setStatistic] = useState({
         total: 0,
         completed: 0,
         new: 0,
@@ -22,8 +22,10 @@ function App(props) {
         unlocked: false
     });
 
-    const setStatistic = (data = tasks) => {
-        setStat({
+    const setState = (data = tasks) => {
+        setTasks(data);
+
+        setStatistic({
             total: data.length,
             completed: data.filter(task => task.data.completed).length,
             new: data.filter(task => task.state.isNewTask).length,
@@ -37,8 +39,8 @@ function App(props) {
             const taskIndex = tasks.findIndex(task => task.data.id === data.id);
             const updatedTask = await saveTaskDB({ data, state });
             tasks[taskIndex] = updatedTask;
-            setTasks(tasks);
-            setStatistic(tasks);
+
+            setState(tasks);
         }
     }
 
@@ -49,34 +51,26 @@ function App(props) {
     const handleTaskRemove = async ({ data, state }) => {
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
 
-        // array.splice() returns an array of the removed items
+        // array.splice() returns an array of the removed items, we need the first.
         const removedTask = tasks.splice(taskIndex, 1)[0];
 
         // Deal with the situation when the removed object is not saved to the DataBase.
-        if (state.isNewTask) {
-            setTasks(tasks);
-            setStatistic(tasks);
-        } else {
-            await removeTaskDB(removedTask).then(() => {
-                setTasks(tasks);
-                setStatistic(tasks);
-            });
-        }
+        if (state.isNewTask) setState(tasks);
+        else await removeTaskDB(removedTask).then(() => { setState(tasks); });
     }
 
     const handleTaskChange = ({ data, state }) => {
         const taskIndex = tasks.findIndex(task => task.data.id === data.id);
         tasks[taskIndex] = { data, state };
 
-        setTasks(tasks);
-        setStatistic(tasks);
+        setState(tasks);
     }
 
     const handleAddNewTask = (data) => {
-        // When the 'data' is not provided it is a new task creation,
+        // When the 'data' is not provided it is a new task,
         // otherwise it is a clone of an existing task.
-        // We must create a deep copy of the data, to avoid changing the original,
-        // otherwise the next if statement will fail.
+        // We must create a deep copy of the 'data', to avoid
+        // changing the original, because it is used further.
         const newTaskData = data ? { ...data } : {
             id: 0,
             title: '',
@@ -98,25 +92,19 @@ function App(props) {
             tasks.unshift(newTask);
         }
 
-        setTasks(tasks);
-        setStatistic(tasks);
+        setState(tasks);
     };
 
     const handleLockUnlockAllTasks = (event) => {
-        if (statistic.unlocked) {
-            tasks.forEach(task => { task.state.isLocked = true; });
-        } else {
-            tasks.forEach(task => { task.state.isLocked = false; });
-        }
+        if (statistic.unlocked) tasks.forEach(task => { task.state.isLocked = true; });
+        else tasks.forEach(task => { task.state.isLocked = false; });
 
-        setTasks(tasks);
-        setStatistic(tasks);
+        setState(tasks);
     }
 
     const handleLoadTaskListDB = async (event) => {
-        const data = await getTasksListDB([]);
-        setTasks(data);
-        setStatistic(data);
+        const data = await getTasksListDB();
+        setState(data);
     }
 
     useEffect(() => {
@@ -128,9 +116,9 @@ function App(props) {
             <NavContext.Provider key="nav-context" value={{
                 statistic,
                 handleAddNewTask,
-                handleLoadTaskListDB,
                 handleSaveAllTasks,
-                handleLockUnlockAllTasks
+                handleLockUnlockAllTasks,
+                handleLoadTaskListDB
             }}>
                 <NavComponent key="nav" />
             </NavContext.Provider>
@@ -138,10 +126,10 @@ function App(props) {
             {tasks.map(task =>
                 <TaskContext.Provider value={{
                     task,
-                    handleTaskChange,
-                    handleTaskRemove,
+                    handleAddNewTask,
                     handleTaskSave,
-                    handleAddNewTask
+                    handleTaskChange,
+                    handleTaskRemove
                 }} key={`task-${task.data.id}-context`}>
                     <TaskComponent key={`task-${task.data.id}`} />
                 </TaskContext.Provider>
