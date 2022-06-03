@@ -45,6 +45,7 @@ function App(props) {
     }
 
     const handleSaveAllTasks = async (event) => {
+        // We can't use forEach because we need to await each task save.
         for (const task of tasks) await handleTaskSave(task);
     }
 
