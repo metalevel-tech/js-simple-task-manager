@@ -67,6 +67,8 @@ The application [json-server](https://github.com/typicode/json-server) is used a
 |PUT    |/tasks/id  |update Todo by id  |
 |DELETE |/tasks/id  |remove Todo by id  |
 
-### Questions
+### Q&A
 
-* [Which is better](https://github.com/metalevel-tech/js-simple-task-manager/commit/55215199ae24c3d5d5526438469c0c6ebefe51ed#diff-6ea1aaf1b9c53ddae6d7edf1fa3ff1e34adb5a392fd2fa79e17d92b292e49c18)
+**Q:** [Which is better](https://github.com/metalevel-tech/js-simple-task-manager/commit/55215199ae24c3d5d5526438469c0c6ebefe51ed#diff-6ea1aaf1b9c53ddae6d7edf1fa3ff1e34adb5a392fd2fa79e17d92b292e49c18)?
+
+**A:** The first variant is better in this case. At all we do not need Context for this simle task and the variant from the branch [ReactJsHooksSyntaxBeforeContext](https://github.com/metalevel-tech/js-simple-task-manager/tree/ReactJsHooksSyntaxBeforeContext) is just fine. But this is just an exercise so the Context example will be leaved here with the first variant according to the question.

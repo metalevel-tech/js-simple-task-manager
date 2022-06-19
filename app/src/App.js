@@ -124,17 +124,18 @@ function App(props) {
                 <NavComponent key="nav" />
             </NavContext.Provider>
 
-            {tasks.map(task =>
-                <TaskContext.Provider value={{
-                    task,
-                    handleAddNewTask,
-                    handleTaskSave,
-                    handleTaskChange,
-                    handleTaskRemove
-                }} key={`task-${task.data.id}-context`}>
-                    <TaskComponent key={`task-${task.data.id}`} />
-                </TaskContext.Provider>
-            )}
+            <TaskContext.Provider key="task-context" value={{
+                handleTaskChange,
+                handleTaskRemove,
+                handleTaskSave,
+                handleAddNewTask
+            }}>
+                {tasks.map(task => <TaskComponent
+                    key={`task-${task.data.id}`}
+                    data={task.data}
+                    state={task.state}
+                />)}
+            </TaskContext.Provider>
         </React.Fragment>
     );
     // We can pass just 'statistic', 'task' and 'setState()',
